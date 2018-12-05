@@ -15,7 +15,7 @@ def get_cameras():
     f_pinhole_x = 109.
     f_pinhole_y = 0.
     
-    b_pinhole_x = 5.
+    b_pinhole_x = 0.    # to be translated by 5. later on (see below)
     b_pinhole_y = -102.
 
     n = 16          # number of detectors per camera
@@ -44,7 +44,7 @@ def get_cameras():
     b_pinhole_x_rotated = b_pinhole_x*np.cos(theta) - b_pinhole_y*np.sin(theta)
     b_pinhole_y_rotated = b_pinhole_x*np.sin(theta) + b_pinhole_y*np.cos(theta)
 
-    b_pinhole_x = b_pinhole_x_rotated
+    b_pinhole_x = b_pinhole_x_rotated + 5.      # translation by 5. is here
     b_pinhole_y = b_pinhole_y_rotated
 
     # rotate detectors
@@ -52,7 +52,7 @@ def get_cameras():
     b_detector_x_rotated = b_detector_x*np.cos(theta) - b_detector_y*np.sin(theta)
     b_detector_y_rotated = b_detector_x*np.sin(theta) + b_detector_y*np.cos(theta)
     
-    b_detector_x = b_detector_x_rotated
+    b_detector_x = b_detector_x_rotated + 5.    # translation by 5. is here
     b_detector_y = b_detector_y_rotated
     
     coords = []
