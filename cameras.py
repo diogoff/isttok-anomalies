@@ -15,7 +15,7 @@ def get_cameras():
     f_pinhole_x = 109.
     f_pinhole_y = 0.
     
-    b_pinhole_x = 0.    # to be translated by 5. later on (see below)
+    b_pinhole_x = 0.    # to be translated by 5. after rotation (see below)
     b_pinhole_y = -102.
 
     n = 16          # number of detectors per camera
@@ -36,6 +36,8 @@ def get_cameras():
 
     b_detector_x = b_pinhole_x + size/2. - width/2. - np.arange(n)*step
     b_detector_y = (b_pinhole_y - dist) * np.ones(n)
+
+    # bottom camera rotation
 
     theta = np.radians(7.5)
     
