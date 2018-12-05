@@ -15,35 +15,46 @@ def get_cameras():
     f_pinhole_x = 109.
     f_pinhole_y = 0.
     
-    theta = np.radians(-82.5)
-
-    b_pinhole_x = 5. + 102.*np.cos(theta)
-    b_pinhole_y = 102.*np.sin(theta)
+    b_pinhole_x = 5.
+    b_pinhole_y = -102.
 
     n = 16          # number of detectors per camera
-    size = 0.75     # detector size
-    space = 0.2     # space between detectors
-    dist = 9.0      # distance from camera to pinhole
-
-    t_detector_x = t_pinhole_x - (n*size + (n-1)*space)/2. + size/2. + np.arange(n)*(size + space)
+    width = 0.75    # detector width
+    space = 0.20    # space between detectors
+    dist = 9.0      # distance from pinhole to camera
+    
+    size = n*width + (n-1)*space        # camera full size
+    step = width + space                # distance between adjacent detectors
+    
+    t_detector_x = t_pinhole_x - size/2. + width/2. + np.arange(n)*step
     t_detector_y = (t_pinhole_y + dist) * np.ones(n)
 
     f_detector_x = (f_pinhole_x + dist) * np.ones(n)
-    f_detector_y = f_pinhole_y + (n*size + (n-1)*space)/2. - size/2. - np.arange(n)*(size + space)
+    f_detector_y = f_pinhole_y + size/2. - width/2. - np.arange(n)*step
 
-    dist = 13.0      # distance from camera to pinhole (different for the bottom camera)
+    dist = 13.0     # different for bottom camera
 
-    b_detector_x = (n*size + (n-1)*space)/2. - size/2. - np.arange(n)*(size + space)
-    b_detector_y = - dist * np.ones(n)
+    b_detector_x = b_pinhole_x + size/2. - width/2. - np.arange(n)*step
+    b_detector_y = (b_pinhole_y - dist) * np.ones(n)
 
     theta = np.radians(7.5)
+    
+    # rotate pinhole
+    
+    b_pinhole_x_rotated = b_pinhole_x*np.cos(theta) - b_pinhole_y*np.sin(theta)
+    b_pinhole_y_rotated = b_pinhole_x*np.sin(theta) + b_pinhole_y*np.cos(theta)
 
-    b_detector_rotated_x = b_detector_x*np.cos(theta) - b_detector_y*np.sin(theta)
-    b_detector_rotated_y = b_detector_x*np.sin(theta) + b_detector_y*np.cos(theta)
+    b_pinhole_x = b_pinhole_x_rotated
+    b_pinhole_y = b_pinhole_y_rotated
 
-    b_detector_x = b_pinhole_x + b_detector_rotated_x
-    b_detector_y = b_pinhole_y + b_detector_rotated_y
+    # rotate detectors
 
+    b_detector_x_rotated = b_detector_x*np.cos(theta) - b_detector_y*np.sin(theta)
+    b_detector_y_rotated = b_detector_x*np.sin(theta) + b_detector_y*np.cos(theta)
+    
+    b_detector_x = b_detector_x_rotated
+    b_detector_y = b_detector_y_rotated
+    
     coords = []
 
     for i in range(n):
