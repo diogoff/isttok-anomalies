@@ -38,7 +38,7 @@ plot_signals(signals_data, signals_time)
 
 # -------------------------------------------------------------------------
 
-from tomo import *
+from reconstructions import *
 
 tomo, tomo_t = get_tomo(projections, signals_data, signals_time)
 
