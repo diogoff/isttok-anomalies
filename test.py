@@ -14,8 +14,8 @@ plot_cameras(cameras)
 
 from projections import *
 
-n_rows = 15
-n_cols = 15
+n_rows = 101
+n_cols = 101
 
 projections = get_projections(cameras, n_rows, n_cols)
 
